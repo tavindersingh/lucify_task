@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_attend_app/common/helpers/sample_data.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
+import 'package:smart_attend_app/features/attendance/presentation/pages/attendance_detail_page.dart';
 import 'package:smart_attend_app/features/courses/presentation/widgets/course_list_item.dart';
 
 class CoursesListPage extends StatelessWidget {
@@ -36,6 +37,10 @@ class CoursesListPage extends StatelessWidget {
                 children: [
                   CourseListItem(
                     course: course,
+                    onItemClick: (course) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => const AttendanceDetailPage()));
+                    },
                   ),
                   const SizedBox(
                     height: 12,
