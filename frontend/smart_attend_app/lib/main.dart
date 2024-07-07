@@ -18,6 +18,10 @@ class MainApp extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             minimumSize: const Size.fromHeight(60),
             foregroundColor: Colors.white,
+            backgroundColor: const Color(0xFFE43E3A),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
             textStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w700,

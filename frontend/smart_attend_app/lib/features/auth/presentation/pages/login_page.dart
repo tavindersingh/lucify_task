@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_attend_app/features/courses/presentation/pages/courses_list_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -91,17 +92,11 @@ class LoginPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 26),
                       ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFE43E3A),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 80,
-                            vertical: 16,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (_) => const CoursesListPage()));
+                        },
                         child: const Text('Log in'),
                       ),
                       const SizedBox(height: 30),
