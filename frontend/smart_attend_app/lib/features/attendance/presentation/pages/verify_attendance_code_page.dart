@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_attend_app/common/helpers/open_dialog.dart';
+import 'package:smart_attend_app/common/widgets/dialog_widget.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 
@@ -58,7 +60,9 @@ class VerifyAttendanceCodePage extends StatelessWidget {
                   height: 30,
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    openSuccessDialog(context);
+                  },
                   child: const Text('Submit'),
                 ),
               ],
@@ -67,6 +71,16 @@ class VerifyAttendanceCodePage extends StatelessWidget {
             const Footer(),
           ],
         ),
+      ),
+    );
+  }
+
+  void openSuccessDialog(BuildContext context) {
+    openDialog(
+      context: context,
+      content: DialogWidget(
+        title: 'Your attendance\nwas successfully marked',
+        onDoneClick: () {},
       ),
     );
   }
