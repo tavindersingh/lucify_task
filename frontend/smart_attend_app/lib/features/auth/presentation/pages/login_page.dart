@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:smart_attend_app/features/courses/presentation/pages/courses_list_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -6,45 +7,71 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formTween = MovieTween(
+      curve: Curves.elasticOut,
+    )..scene(
+        begin: const Duration(milliseconds: 0),
+        end: const Duration(milliseconds: 400),
+      ).tween(
+        'positionTop',
+        Tween(begin: 600.0, end: 310.0),
+      );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.all(25.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: 106,
-                  height: 106,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFC02A2A).withOpacity(0.15),
-                        offset: const Offset(-7.24, 6.71),
-                        blurRadius: 9.89,
-                        spreadRadius: 1,
-                      )
-                    ],
+        child: Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.topCenter,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Positioned(
+              top: 60,
+              child: Column(
+                children: [
+                  Hero(
+                    tag: 'appLogo',
+                    child: Container(
+                      width: 106,
+                      height: 106,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFC02A2A).withOpacity(0.15),
+                            offset: const Offset(-7.24, 6.71),
+                            blurRadius: 9.89,
+                            spreadRadius: 1,
+                          )
+                        ],
+                      ),
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
                   ),
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                const Text(
-                  'SmartAttend',
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFFE43E3A),
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
-                const SizedBox(height: 86),
-                SizedBox(
+                  const Text(
+                    'SmartAttend',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFFE43E3A),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PlayAnimationBuilder(
+              tween: formTween,
+              duration: const Duration(milliseconds: 400),
+              builder: (context, value, child) {
+                return Positioned(
+                  top: value.get('positionTop'),
+                  left: 0,
+                  right: 0,
                   child: Column(
                     children: [
                       TextField(
@@ -114,15 +141,17 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 40),
-                const Text(
-                  'Powered by Lucify',
-                  style: TextStyle(color: Colors.black38),
-                ),
-              ],
+                );
+              },
             ),
-          ),
+            const Positioned(
+              bottom: 0,
+              child: Text(
+                'Powered by Lucify',
+                style: TextStyle(color: Colors.black38),
+              ),
+            ),
+          ],
         ),
       ),
     );

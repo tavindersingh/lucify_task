@@ -128,40 +128,43 @@ class _SplashPageState extends State<SplashPage> {
             builder: (context, value, child) {
               return Positioned(
                 top: value.get('topPosition'),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  width: value.get('width'),
-                  height: value.get('height'),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(-1.77, 1.77),
-                        blurRadius: 5.48,
-                        color: const Color(0xFFC02A2A).withOpacity(0.15),
+                child: Hero(
+                  tag: 'appLogo',
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    width: value.get('width'),
+                    height: value.get('height'),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: const Offset(-1.77, 1.77),
+                          blurRadius: 5.48,
+                          color: const Color(0xFFC02A2A).withOpacity(0.15),
+                        ),
+                        BoxShadow(
+                          offset: const Offset(-7.24, 6.71),
+                          blurRadius: 9.89,
+                          color: const Color(0xFFC02A2A).withOpacity(0.13),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: PlayAnimationBuilder(
+                        tween: logoTween,
+                        delay: const Duration(milliseconds: 410),
+                        duration: const Duration(milliseconds: 700),
+                        builder: (context, value, child) {
+                          return SizedBox(
+                            width: value.get('width'),
+                            height: value.get('height'),
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                            ),
+                          );
+                        },
                       ),
-                      BoxShadow(
-                        offset: const Offset(-7.24, 6.71),
-                        blurRadius: 9.89,
-                        color: const Color(0xFFC02A2A).withOpacity(0.13),
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: PlayAnimationBuilder(
-                      tween: logoTween,
-                      delay: const Duration(milliseconds: 410),
-                      duration: const Duration(milliseconds: 700),
-                      builder: (context, value, child) {
-                        return SizedBox(
-                          width: value.get('width'),
-                          height: value.get('height'),
-                          child: Image.asset(
-                            'assets/images/logo.png',
-                          ),
-                        );
-                      },
                     ),
                   ),
                 ),
