@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smart_attend_app/features/splash/presentation/pages/splash_page.dart';
+import 'package:smart_attend_app/features/auth/presentation/pages/login_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +50,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashPage(),
+      home: const LoginPage(),
     );
   }
 }

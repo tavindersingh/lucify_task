@@ -1,21 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:simple_animations/simple_animations.dart';
 import 'package:smart_attend_app/features/courses/presentation/pages/courses_list_page.dart';
+import 'package:sprung/sprung.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _animation = Tween<double>(begin: 800.0, end: 310.0).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Sprung.custom(
+          mass: 1,
+          stiffness: 177.8,
+          damping: 20,
+        ),
+      ),
+    );
+
+    // Delay the start of the animation by 1 millisecond
+    Future.delayed(const Duration(milliseconds: 1), () {
+      _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final formTween = MovieTween(
-      curve: Curves.elasticOut,
-    )..scene(
-        begin: const Duration(milliseconds: 0),
-        end: const Duration(milliseconds: 400),
-      ).tween(
-        'positionTop',
-        Tween(begin: 600.0, end: 310.0),
-      );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -64,12 +95,11 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
             ),
-            PlayAnimationBuilder(
-              tween: formTween,
-              duration: const Duration(milliseconds: 400),
-              builder: (context, value, child) {
+            AnimatedBuilder(
+              animation: _animation,
+              builder: (context, child) {
                 return Positioned(
-                  top: value.get('positionTop'),
+                  top: _animation.value,
                   left: 0,
                   right: 0,
                   child: Column(
