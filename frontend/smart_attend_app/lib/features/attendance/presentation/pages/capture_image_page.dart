@@ -12,7 +12,9 @@ class CaptureImagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => CameraProvider()..initializeCamera(),
+      create: (context) => CameraProvider()
+        ..initializeCamera()
+        ..startTimer(),
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -33,12 +35,16 @@ class CaptureImagePage extends StatelessWidget {
               ),
               Column(
                 children: [
-                  const Text(
-                    'Timer 15 seconds left',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Consumer<CameraProvider>(
+                    builder: (context, provider, child) {
+                      return Text(
+                        'Timer ${provider.secondsLeft} seconds left',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
                   ),
                   const Text(
                     'Keep your App in foreground',

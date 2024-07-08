@@ -69,13 +69,17 @@ class _CameraWidgetState extends State<CameraWidget> {
                   color: Colors.black.withOpacity(0.2),
                   padding: const EdgeInsets.symmetric(horizontal: 38),
                   child: Center(
-                    child: LinearProgressIndicator(
-                      value: 0.4,
-                      minHeight: 10,
-                      borderRadius: BorderRadius.circular(20),
-                      backgroundColor: const Color(0xFFECECEC),
-                      color: const Color(0xFFE43E3A),
-                    ),
+                    child: Consumer<CameraProvider>(
+                        builder: (context, provider, child) {
+                      return LinearProgressIndicator(
+                        value: 1.0 -
+                            (provider.secondsLeft * 1.0) / provider.totalTime,
+                        minHeight: 10,
+                        borderRadius: BorderRadius.circular(20),
+                        backgroundColor: const Color(0xFFECECEC),
+                        color: const Color(0xFFE43E3A),
+                      );
+                    }),
                   ),
                 ),
               )
