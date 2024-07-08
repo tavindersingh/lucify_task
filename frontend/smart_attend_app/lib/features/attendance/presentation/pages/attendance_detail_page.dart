@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 import 'package:smart_attend_app/common/widgets/title.dart';
 import 'package:smart_attend_app/features/attendance/presentation/pages/capture_image_page.dart';
@@ -77,13 +78,15 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 36,
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const CaptureImagePage(),
-                ));
-              },
-              child: const Text('Mark Attendance'),
+            Hero(
+              tag: 'markAttendanceButton',
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(createLeftSlideRoute(const CaptureImagePage()));
+                },
+                child: const Text('Mark Attendance'),
+              ),
             ),
             const SizedBox(
               height: 58,

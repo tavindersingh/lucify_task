@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_attend_app/common/helpers/sample_data.dart';
+import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 import 'package:smart_attend_app/features/attendance/presentation/pages/attendance_detail_page.dart';
@@ -200,10 +201,12 @@ class _CoursesListPageState extends State<CoursesListPage>
                                 CourseListItem(
                                   course: course,
                                   onItemClick: (course) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const AttendanceDetailPage()));
+                                    // Navigator.of(context).push(
+                                    //     MaterialPageRoute(
+                                    //         builder: (_) =>
+                                    //             const AttendanceDetailPage()));
+                                    Navigator.of(context).push(createFadeRoute(
+                                        const AttendanceDetailPage()));
                                   },
                                 ),
                                 const SizedBox(
@@ -227,9 +230,12 @@ class _CoursesListPageState extends State<CoursesListPage>
                     0,
                     _bottomButtonSlideAnimation.value,
                   ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Mark Attendance'),
+                  child: Hero(
+                    tag: 'markAttendanceButton',
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Mark Attendance'),
+                    ),
                   ),
                 );
               },
