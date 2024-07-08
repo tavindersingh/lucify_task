@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/features/courses/presentation/pages/courses_list_page.dart';
 import 'package:sprung/sprung.dart';
 
@@ -150,8 +151,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       ElevatedButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (_) => const CoursesListPage()));
+                              createFadeRoute(const CoursesListPage()));
                         },
                         child: const Text('Log in'),
                       ),
