@@ -129,7 +129,6 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
-    // Delay the start of the animation by 1 millisecond
     Future.delayed(const Duration(milliseconds: 1), () {
       _controller.forward();
     });

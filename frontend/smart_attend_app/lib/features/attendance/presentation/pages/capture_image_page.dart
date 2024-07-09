@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 import 'package:smart_attend_app/features/attendance/presentation/pages/verify_attendance_code_page.dart';
@@ -76,7 +77,8 @@ class CaptureImagePage extends StatelessWidget {
   }
 
   void moveToNextPage(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => const VerifyAttendanceCodePage()));
+    Navigator.of(context).push(createLeftSlideRoute(
+      const VerifyAttendanceCodePage(),
+    ));
   }
 }
