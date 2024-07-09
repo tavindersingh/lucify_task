@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_attend_app/common/helpers/sample_data.dart';
 import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 import 'package:smart_attend_app/features/attendance/presentation/pages/attendance_detail_page.dart';
 import 'package:smart_attend_app/features/courses/presentation/widgets/course_list_item.dart';
+import 'package:smart_attend_app/features/sockets/presentation/providers/socket_provider.dart';
 
 class CoursesListPage extends StatefulWidget {
   const CoursesListPage({super.key});
@@ -25,6 +27,13 @@ class _CoursesListPageState extends State<CoursesListPage>
   @override
   void initState() {
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SocketProvider>(
+        context,
+        listen: false,
+      ).connectToWebsocket();
+    });
 
     _controller = AnimationController(
       vsync: this,

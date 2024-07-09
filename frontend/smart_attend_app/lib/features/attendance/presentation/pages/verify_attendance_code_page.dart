@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_attend_app/common/helpers/open_dialog.dart';
 import 'package:smart_attend_app/common/widgets/dialog_widget.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
+import 'package:smart_attend_app/features/attendance/presentation/providers/attendance_provider.dart';
 
 class VerifyAttendanceCodePage extends StatefulWidget {
   const VerifyAttendanceCodePage({super.key});
@@ -118,6 +120,10 @@ class _VerifyAttendanceCodePageState extends State<VerifyAttendanceCodePage>
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          Provider.of<AttendanceProvider>(
+                            context,
+                            listen: false,
+                          ).sendMessage(context, 'Mark attendance');
                           openSuccessDialog(context);
                         },
                         child: const Text('Submit'),
