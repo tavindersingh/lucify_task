@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_attend_app/common/services/notification_service.dart';
 import 'package:smart_attend_app/features/attendance/data/datasources/web_socket_channel.dart';
 
 class SocketProvider extends ChangeNotifier {
@@ -25,6 +26,8 @@ class SocketProvider extends ChangeNotifier {
       'messageFromServer',
       (data) {
         print(data);
+
+        NotificationService.display(data);
       },
     );
   }

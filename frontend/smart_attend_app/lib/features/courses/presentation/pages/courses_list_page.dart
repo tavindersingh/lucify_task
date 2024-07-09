@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_attend_app/common/helpers/sample_data.dart';
 import 'package:smart_attend_app/common/router/route_transition.dart';
+import 'package:smart_attend_app/common/services/notification_service.dart';
 import 'package:smart_attend_app/common/widgets/footer.dart';
 import 'package:smart_attend_app/common/widgets/my_app_bar.dart';
 import 'package:smart_attend_app/features/attendance/presentation/pages/attendance_detail_page.dart';
@@ -33,6 +34,8 @@ class _CoursesListPageState extends State<CoursesListPage>
         context,
         listen: false,
       ).connectToWebsocket();
+
+      NotificationService.requestNotificationPermission();
     });
 
     _controller = AnimationController(

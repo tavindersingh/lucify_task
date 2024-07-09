@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_attend_app/common/services/notification_service.dart';
 import 'package:smart_attend_app/features/attendance/presentation/providers/attendance_provider.dart';
 import 'package:smart_attend_app/features/auth/presentation/pages/login_page.dart';
 import 'package:smart_attend_app/features/sockets/presentation/providers/socket_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService.initialize();
   runApp(const MainApp());
 }
 

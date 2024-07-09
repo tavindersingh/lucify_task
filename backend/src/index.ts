@@ -18,11 +18,6 @@ var io = new Server(server);
 io.on("connection", (socket) => {
   console.log("New user connected");
   //emit message from server to user
-  socket.emit("newMessage", {
-    from: "jen@mds",
-    text: "hepppp",
-    createdAt: 123,
-  });
 
   // listen for message from user
   socket.on("newMessage", (newMessage) => {
@@ -33,7 +28,7 @@ io.on("connection", (socket) => {
         title: "New Message",
         body: "Your attendance is marked success fully for today",
       });
-    }, 3000);
+    }, 30000);
   });
 
   // when server disconnects from user
