@@ -29,12 +29,13 @@ class _CoursesListPageState extends State<CoursesListPage>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Provider.of<SocketProvider>(
         context,
         listen: false,
       ).connectToWebsocket();
 
+      await Future.delayed(const Duration(seconds: 1));
       NotificationService.requestNotificationPermission();
     });
 

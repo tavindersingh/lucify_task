@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
-  const Footer({super.key});
+  final Color color;
+  const Footer({
+    super.key,
+    this.color = const Color(0xFF1B1B1B),
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Text(
         'Powered by Lucify',
         style: TextStyle(
           fontSize: 14,
-          color: Color(0xFF1B1B1B),
+          color: color,
         ),
       ),
     );

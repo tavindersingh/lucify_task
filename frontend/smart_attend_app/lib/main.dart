@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_attend_app/common/services/notification_service.dart';
 import 'package:smart_attend_app/features/attendance/presentation/providers/attendance_provider.dart';
-import 'package:smart_attend_app/features/auth/presentation/pages/login_page.dart';
 import 'package:smart_attend_app/features/sockets/presentation/providers/socket_provider.dart';
+import 'package:smart_attend_app/features/splash/presentation/pages/splash_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,7 +64,7 @@ class MainApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const LoginPage(),
+        home: const SplashPage(),
       ),
     );
   }
