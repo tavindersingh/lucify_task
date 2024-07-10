@@ -1,3 +1,3 @@
 class AppConstants {
-  static const String serverUrl = "http://192.168.29.234:3000";
+  static const String serverUrl = "https://lucify-task.onrender.com";
 }
