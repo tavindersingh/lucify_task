@@ -1,17 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:smart_attend_app/common/helpers/app_constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class WebSocketChannelFactory {
   static final WebSocketChannelFactory instance = WebSocketChannelFactory();
 
   String _fetchBaseUrl() {
-    switch (kDebugMode) {
-      case true:
-        return "http://192.168.29.234:3000";
-      default:
-        //Product host url
-        return "";
-    }
+    return AppConstants.serverUrl;
   }
 
   io.Socket get socket => io.io(
