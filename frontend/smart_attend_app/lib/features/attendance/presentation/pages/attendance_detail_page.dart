@@ -19,10 +19,12 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 56,
             ),
+            // Custom app bar widget
             const MyAppBar(),
             const SizedBox(
               height: 24,
             ),
+            // Custom title widget for the course name
             const AppTitle(
               text: 'MTL 100',
               fontWeight: FontWeight.bold,
@@ -30,8 +32,10 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
+            // Row to display location and time information
             Row(
               children: [
+                // Location information
                 Row(
                   children: [
                     Image.asset(
@@ -54,6 +58,7 @@ class AttendanceDetailPage extends StatelessWidget {
                 const SizedBox(
                   width: 20,
                 ),
+                // Time information
                 Row(
                   children: [
                     Image.asset(
@@ -78,6 +83,7 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 36,
             ),
+            // Button to navigate to the Capture Image Page
             Hero(
               tag: 'markAttendanceButton',
               child: ElevatedButton(
@@ -91,8 +97,10 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 58,
             ),
+            // Row to display attendance history and filter options
             Row(
               children: [
+                // Text to display attendance history title
                 const Expanded(
                   child: Text(
                     'Attendance history\nand statistics',
@@ -102,6 +110,7 @@ class AttendanceDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                // Dropdown to select the range of attendance history
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 14,
@@ -141,6 +150,7 @@ class AttendanceDetailPage extends StatelessWidget {
             const SizedBox(
               height: 48,
             ),
+            // Custom widget to display attendance history table
             const AttendanceHistoryTable(),
           ],
         ),

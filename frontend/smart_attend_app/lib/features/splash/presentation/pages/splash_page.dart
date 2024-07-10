@@ -13,10 +13,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
+  // Animation controllers for different parts of the splash screen animation
   late AnimationController _animationController;
   late AnimationController _springAnimationController;
   late AnimationController _footerAnimationController;
 
+  // Animations for different properties of the logo container and title
   late Animation<Color?> _logoContainerBackgroundAnimation;
   late Animation<double> _logoContainerTopPositionAnimation;
   late Animation<double> _logoContainerRadiusAnimation;
@@ -25,9 +27,11 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late Animation<double> _titleOpacityAnimation;
   late Animation<double> _titleSlideAnimation;
 
+  // Simulations for spring effects
   late SpringSimulation _springSimulation;
   late SpringSimulation _footerSimulation;
 
+  // Initial position of the footer animation
   final double footerInitialPosition = -100;
 
   @override
@@ -36,6 +40,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
     const double animationDuration = 1000.0;
 
+    // Initialize the main animation controller
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(
@@ -43,6 +48,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Initialize the spring animation controllers
     _springAnimationController = AnimationController.unbounded(
       vsync: this,
     );
@@ -51,6 +57,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       vsync: this,
     );
 
+    // Define the background color animation for the logo container
     _logoContainerBackgroundAnimation = ColorTween(
       begin: Colors.transparent,
       end: Colors.white,
@@ -65,6 +72,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Define the top position animation for the logo container
     _logoContainerTopPositionAnimation = TweenSequence<double>(
       [
         TweenSequenceItem(
@@ -100,6 +108,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Define the size animation for the logo container
     _logoContainerSizeAnimation = TweenSequence<double>(
       [
         TweenSequenceItem(
@@ -135,6 +144,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Define the radius animation for the logo container
     _logoContainerRadiusAnimation = TweenSequence<double>(
       [
         TweenSequenceItem(
@@ -170,20 +180,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
-    // _logoContainerHeightAnimation = Tween(
-    //   begin: 1000.0,
-    //   end: 106.0,
-    // ).animate(
-    //   CurvedAnimation(
-    //     parent: _animationController,
-    //     curve: const Interval(
-    //       100 / animationDuration,
-    //       400 / animationDuration,
-    //       curve: Curves.easeOut,
-    //     ),
-    //   ),
-    // );
-
+    // Define the size animation for the logo itself
     _logoSizeAnimation = TweenSequence<double>(
       [
         TweenSequenceItem(
@@ -212,6 +209,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Define the opacity animation for the title
     _titleOpacityAnimation = Tween(
       begin: 0.0,
       end: 1.0,
@@ -226,6 +224,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Define the slide animation for the title
     _titleSlideAnimation = Tween(
       begin: 100.0,
       end: 0.0,
@@ -240,6 +239,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       ),
     );
 
+    // Initialize the spring simulation for the logo
     _springSimulation = SpringSimulation(
       const SpringDescription(
         mass: 1,
@@ -251,6 +251,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       0,
     );
 
+    // Initialize the spring simulation for the footer
     _footerSimulation = SpringSimulation(
       const SpringDescription(
         mass: 1,
@@ -262,6 +263,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
       0,
     );
 
+    // Start the animations after a short delay
     Future.delayed(
       const Duration(milliseconds: 1),
       () async {
@@ -272,6 +274,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           ),
         );
 
+        // Start the footer animation
         _footerAnimationController.animateWith(_footerSimulation);
 
         await Future.delayed(
@@ -280,6 +283,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           ),
         );
 
+        // Start the spring animation for the logo
         _springAnimationController.animateWith(_springSimulation);
 
         await Future.delayed(
@@ -288,6 +292,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
           ),
         );
 
+        // Move to the next screen
         moveToNextScreen();
       },
     );

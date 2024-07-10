@@ -14,7 +14,9 @@ class CameraWidget extends StatefulWidget {
 class _CameraWidgetState extends State<CameraWidget> {
   @override
   Widget build(BuildContext context) {
+    // Get the screen width to set the camera preview width
     final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       width: screenWidth,
       clipBehavior: Clip.antiAlias,
@@ -34,25 +36,32 @@ class _CameraWidgetState extends State<CameraWidget> {
           ),
         ],
       ),
+      // Use Consumer to listen to changes in CameraProvider
       child: Consumer<CameraProvider>(
         builder: (context, cameraProvider, child) {
+          // Show a loading indicator if the camera is still loading
           if (cameraProvider.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
+          // Show an empty box if the camera is not initialized
           if (cameraProvider.controller == null ||
               !cameraProvider.controller!.value.isInitialized) {
             return const SizedBox();
           }
+
+          // Show the camera preview and additional UI elements
           return Stack(
             fit: StackFit.expand,
             children: [
+              // Display the camera preview
               SizedBox(
                 width: screenWidth,
                 child: CameraPreview(cameraProvider.controller!),
               ),
+              // Display an overlay image at the center
               Align(
                 alignment: Alignment.center,
                 child: SizedBox(
@@ -61,6 +70,7 @@ class _CameraWidgetState extends State<CameraWidget> {
                   child: Image.asset('assets/images/oval.png'),
                 ),
               ),
+              // Display a progress bar at the bottom
               Positioned(
                 left: 0,
                 right: 0,
@@ -71,9 +81,11 @@ class _CameraWidgetState extends State<CameraWidget> {
                   color: Colors.black.withOpacity(0.2),
                   padding: const EdgeInsets.symmetric(horizontal: 38),
                   child: Center(
+                    // Use another Consumer to listen to changes in CameraProvider
                     child: Consumer<CameraProvider>(
                         builder: (context, provider, child) {
                       return LinearProgressIndicator(
+                        // Calculate the progress value based on the remaining time
                         value: 1.0 -
                             (provider.secondsLeft * 1.0) / provider.totalTime,
                         minHeight: 10,
@@ -84,7 +96,7 @@ class _CameraWidgetState extends State<CameraWidget> {
                     }),
                   ),
                 ),
-              )
+              ),
             ],
           );
         },

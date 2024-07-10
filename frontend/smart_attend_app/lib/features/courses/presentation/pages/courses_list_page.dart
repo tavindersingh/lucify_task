@@ -29,6 +29,7 @@ class _CoursesListPageState extends State<CoursesListPage>
   void initState() {
     super.initState();
 
+    // Connect to the WebSocket and request notification permissions after the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       Provider.of<SocketProvider>(
         context,
@@ -39,11 +40,13 @@ class _CoursesListPageState extends State<CoursesListPage>
       NotificationService.requestNotificationPermission();
     });
 
+    // Initialize the main animation controller
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
 
+    // Define the slide animation for the list items
     _slideAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(
@@ -74,6 +77,7 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
+    // Define the opacity animation for the top part of the list
     _opacityAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween(
@@ -104,6 +108,7 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
+    // Define the slide animation for the bottom button
     _bottomButtonSlideAnimation = Tween(
       begin: 400.0,
       end: 0.0,
@@ -114,6 +119,7 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
+    // Define the opacity animation for the list items
     _listOpacityAnimation = Tween(
       begin: 0.0,
       end: 0.3,
@@ -128,6 +134,7 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
+    // Define the full opacity animation for the list items
     _listFullOpacityAnimation = Tween(
       begin: 0.0,
       end: 0.7,
@@ -142,6 +149,7 @@ class _CoursesListPageState extends State<CoursesListPage>
       ),
     );
 
+    // Start the animation after a short delay
     Future.delayed(const Duration(milliseconds: 1), () {
       _controller.forward();
     });
