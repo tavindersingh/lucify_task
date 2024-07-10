@@ -16,4 +16,4 @@
 ##### Note: 
 1. Make sure not to use `localhost` as the server url if running this project locally.
 2. Make sure the computer and the mobile should be in the same network.
-
+3. Server is hosted on Renderer free tier which will sleep after some time of inactivity so if you dont receive notification in 30 seconds then give it a try after 1 or 2 minutes
