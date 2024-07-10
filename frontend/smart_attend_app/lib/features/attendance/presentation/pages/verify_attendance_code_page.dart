@@ -20,6 +20,8 @@ class _VerifyAttendanceCodePageState extends State<VerifyAttendanceCodePage>
   late Animation<double> _slideAnimation;
   late Animation<double> _heightAnimation;
 
+  final GlobalKey<FormState> _formKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -81,54 +83,67 @@ class _VerifyAttendanceCodePageState extends State<VerifyAttendanceCodePage>
               builder: (context, child) {
                 return Transform.translate(
                   offset: Offset(0, _slideAnimation.value),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Please enter code given by Professor',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF1B1B1B),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 22 + _heightAnimation.value,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 36,
-                            vertical: 24,
-                          ),
-                          hintText: 'Enter Code',
-                          hintStyle: const TextStyle(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Please enter code given by Professor',
+                          style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xFF4D4D4D),
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1B1B1B),
                           ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFDADADA),
                         ),
-                      ),
-                      SizedBox(
-                        height: 30 + 1.5 * _heightAnimation.value,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Provider.of<AttendanceProvider>(
-                            context,
-                            listen: false,
-                          ).sendMessage(context, 'Mark attendance');
-                          openSuccessDialog(context);
-                        },
-                        child: const Text('Submit'),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 22 + _heightAnimation.value,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null ||
+                                value.length < 6 ||
+                                value.length > 7) {
+                              return 'Enter 6 digit code';
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 36,
+                              vertical: 24,
+                            ),
+                            hintText: 'Enter Code',
+                            hintStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFF4D4D4D),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFDADADA),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30 + 1.5 * _heightAnimation.value,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Provider.of<AttendanceProvider>(
+                              context,
+                              listen: false,
+                            ).sendMessage(context, 'Mark attendance');
+                            openSuccessDialog(context);
+                          },
+                          child: const Text('Submit'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
@@ -142,6 +157,10 @@ class _VerifyAttendanceCodePageState extends State<VerifyAttendanceCodePage>
   }
 
   void openSuccessDialog(BuildContext context) {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
     openDialog(
       context: context,
       content: DialogWidget(

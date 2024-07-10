@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_attend_app/common/router/route_transition.dart';
 import 'package:smart_attend_app/features/courses/presentation/pages/courses_list_page.dart';
@@ -13,6 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   void initState() {
@@ -103,73 +106,105 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                   top: _animation.value,
                   left: 0,
                   right: 0,
-                  child: Column(
-                    children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 36,
-                            vertical: 24,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null) {
+                              return "Email cannot be empty";
+                            }
+
+                            if (value.isEmpty) {
+                              return "Email cannot be empty";
+                            }
+
+                            if (!EmailValidator.validate(value)) {
+                              return "Enter a valid email address";
+                            }
+
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 36,
+                              vertical: 24,
+                            ),
+                            hintText: 'Your ID',
+                            hintStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFF4D4D4D),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFDADADA),
                           ),
-                          hintText: 'Your ID',
-                          hintStyle: const TextStyle(
+                        ),
+                        const SizedBox(height: 26),
+                        TextFormField(
+                          validator: (value) {
+                            if (value == null) {
+                              return "Password cannot be empty";
+                            }
+
+                            if (value.isEmpty) {
+                              return "Password cannot be empty";
+                            }
+
+                            if (value.length < 8) {
+                              return "Minimum length of password should be 8";
+                            }
+
+                            return null;
+                          },
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 36,
+                              vertical: 24,
+                            ),
+                            hintText: 'Password',
+                            hintStyle: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xFF4D4D4D),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFDADADA),
+                          ),
+                        ),
+                        const SizedBox(height: 26),
+                        ElevatedButton(
+                          onPressed: () {
+                            login();
+                          },
+                          child: const Text('Log in'),
+                        ),
+                        const SizedBox(height: 30),
+                        const Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
                             fontSize: 16,
-                            color: Color(0xFF4D4D4D),
+                            color: Color(0xFF272A2E),
                           ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFDADADA),
                         ),
-                      ),
-                      const SizedBox(height: 26),
-                      TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 36,
-                            vertical: 24,
-                          ),
-                          hintText: 'Password',
-                          hintStyle: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF4D4D4D),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          filled: true,
-                          fillColor: const Color(0xFFDADADA),
+                        const SizedBox(height: 30),
+                        OutlinedButton(
+                          onPressed: () {},
+                          child: const Text('Create new account'),
                         ),
-                      ),
-                      const SizedBox(height: 26),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              createFadeRoute(const CoursesListPage()));
-                        },
-                        child: const Text('Log in'),
-                      ),
-                      const SizedBox(height: 30),
-                      const Text(
-                        'Forgot Password',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Color(0xFF272A2E),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: const Text('Create new account'),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -185,5 +220,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  void login() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    Navigator.of(context)
+        .pushReplacement(createFadeRoute(const CoursesListPage()));
   }
 }
