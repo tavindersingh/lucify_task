@@ -36,20 +36,22 @@ class _CameraWidgetState extends State<CameraWidget> {
       ),
       child: Consumer<CameraProvider>(
         builder: (context, cameraProvider, child) {
-          if (cameraProvider.isLoading ||
-              !cameraProvider.controller.value.isInitialized) {
+          if (cameraProvider.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
+          if (cameraProvider.controller == null ||
+              !cameraProvider.controller!.value.isInitialized) {
+            return const SizedBox();
+          }
           return Stack(
             fit: StackFit.expand,
             children: [
               SizedBox(
                 width: screenWidth,
-                // height: screenWidth / 0.7,
-                child: CameraPreview(cameraProvider.controller),
+                child: CameraPreview(cameraProvider.controller!),
               ),
               Align(
                 alignment: Alignment.center,

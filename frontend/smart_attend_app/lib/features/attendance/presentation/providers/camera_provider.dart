@@ -6,27 +6,28 @@ import 'package:flutter/material.dart';
 class CameraProvider with ChangeNotifier {
   final int totalTime = 15;
 
-  bool isLoading = false;
+  bool isLoading = true;
   int secondsLeft = 15;
-  late CameraController controller;
-  late List<CameraDescription> _cameras;
+
+  CameraController? controller;
+  late List<CameraDescription> cameras;
 
   Timer? _timer;
 
-  void initializeCamera() async {
+  Future<void> initializeCamera() async {
     isLoading = true;
 
     await Future.delayed(const Duration(
       milliseconds: 100,
     ));
-    _cameras = await availableCameras();
+    cameras = await availableCameras();
 
     controller = CameraController(
-      _cameras[1],
+      cameras[1],
       ResolutionPreset.max,
     );
 
-    await controller.initialize();
+    await controller!.initialize();
 
     notifyListeners();
 
@@ -44,10 +45,15 @@ class CameraProvider with ChangeNotifier {
     });
   }
 
+  void disposeCamera() {
+    controller?.dispose();
+    controller = null;
+  }
+
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    disposeCamera();
     _timer?.cancel();
   }
 }

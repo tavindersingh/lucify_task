@@ -7,9 +7,14 @@ import 'package:smart_attend_app/features/attendance/presentation/pages/verify_a
 import 'package:smart_attend_app/features/attendance/presentation/providers/camera_provider.dart';
 import 'package:smart_attend_app/features/attendance/presentation/widgets/camera_widget.dart';
 
-class CaptureImagePage extends StatelessWidget {
+class CaptureImagePage extends StatefulWidget {
   const CaptureImagePage({super.key});
 
+  @override
+  State<CaptureImagePage> createState() => _CaptureImagePageState();
+}
+
+class _CaptureImagePageState extends State<CaptureImagePage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -57,11 +62,15 @@ class CaptureImagePage extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      moveToNextPage(context);
+                  Consumer<CameraProvider>(
+                    builder: (context, provider, child) {
+                      return ElevatedButton(
+                        onPressed: () {
+                          moveToNextPage(context, provider);
+                        },
+                        child: const Text('Capture'),
+                      );
                     },
-                    child: const Text('Capture'),
                   ),
                   const SizedBox(
                     height: 25,
@@ -76,9 +85,19 @@ class CaptureImagePage extends StatelessWidget {
     );
   }
 
-  void moveToNextPage(BuildContext context) {
-    Navigator.of(context).push(createLeftSlideRoute(
+  void moveToNextPage(
+      BuildContext context, CameraProvider cameraProvider) async {
+    // final CameraProvider cameraProvider = Provider.of<CameraProvider>(
+    //   context,
+    //   listen: false,
+    // );
+
+    cameraProvider.disposeCamera();
+
+    await Navigator.of(context).push(createLeftSlideRoute(
       const VerifyAttendanceCodePage(),
     ));
+
+    cameraProvider.initializeCamera();
   }
 }
